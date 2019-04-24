@@ -8,7 +8,7 @@ public class PrefixTreeTest {
 
 	@Test
 	public void testPrefixSearch() {
-		prefixTree tree = new prefixTree();
+		PrefixTree tree = new PrefixTree();
 		tree.insert("student");
 		tree.insert("study");
 		tree.insert("studio");
@@ -22,30 +22,30 @@ public class PrefixTreeTest {
 		tree.insert("she");
 		tree.insert("sherlock");
 		
-		ArrayList<String> list = new ArrayList<>();
-		list.add("student");
-		list.add("study");
-		list.add("studio");		
-		assertEquals(list, tree.prefixSearch("stud"));	
+		ArrayList<String> list1 = tree.prefixSearch("stud");
+		assertTrue(list1.contains("student"));
+		assertTrue(list1.contains("study"));
+		assertTrue(list1.contains("studio"));
 		
-		ArrayList<String> list2 = new ArrayList<>();
-		list2.add("stand");
-		list2.add("standard");
-		list2.add("stanford");
-		list2.add("start");
-		list2.add("stare");
-		assertEquals(list2, tree.prefixSearch("sta"));
+
+		ArrayList<String> list2 = tree.prefixSearch("sta");
+		assertTrue(list2.contains("stand"));
+		assertTrue(list2.contains("standard"));
+		assertTrue(list2.contains("stanford"));
+		assertTrue(list2.contains("start"));
+		assertTrue(list2.contains("stare"));
+
+		ArrayList<String> list3 = tree.prefixSearch("she");
+		assertTrue(list3.contains("she"));
+		assertTrue(list3.contains("sheet"));
+		assertTrue(list3.contains("sherlock"));
 		
-		ArrayList<String> list3 = new ArrayList<>();
-		list3.add("she");
-		list3.add("sheet");
-		list3.add("sherlock");
-		assertEquals(list3, tree.prefixSearch("she"));		
+		assertTrue(tree.prefixSearch("zoo") == null);	
 	}
 
 	@Test
 	public void testInsert() {
-		prefixTree tree = new prefixTree();
+		PrefixTree tree = new PrefixTree();
 		tree.insert("student");
 		tree.insert("study");
 		tree.insert("studio");

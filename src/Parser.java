@@ -1,6 +1,9 @@
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -27,7 +30,7 @@ public class Parser {
 	/**
 	 * threshold to decide which word is a tag
 	 */
-	private static final Double THRESHOLD = 0.5;
+	private static final Double THRESHOLD = 0.3;
 	
 	
 	public Parser() {
@@ -80,6 +83,7 @@ public class Parser {
 			Double frequency = entry.getValue();
 			tfMap.put(word, frequency/maxFrequency);
 		}
+		
 		return tfMap;
 	}
 	
@@ -101,7 +105,7 @@ public class Parser {
 					count ++;
 				}
 			}
-			double c = Math.log(count/size);
+			double c = Math.log10(size/count);
 			idfMap.put(word, c);
 		}
 		return idfMap;
@@ -117,8 +121,14 @@ public class Parser {
 			
 			for(Entry<String,Double> entry2:entry1.getValue().entrySet()) {
 				String word = entry2.getKey();
-				double c = entry2.getValue() * idfMap.get(word);
-				if(c >= THRESHOLD) {
+				double a = entry2.getValue();
+				double c = idfMap.get(word);
+				if(a >= 0.9) {
+					HashSet<String> titles = tfIdfMap.getOrDefault(word, new HashSet<String>());
+					titles.add(title);
+					tfIdfMap.put(word, titles);
+				}
+				else if(a >= 0.7 && c >= 0.4) {
 					HashSet<String> titles = tfIdfMap.getOrDefault(word, new HashSet<String>());
 					titles.add(title);
 					tfIdfMap.put(word, titles);
@@ -130,6 +140,15 @@ public class Parser {
 
 	public HashMap<String, HashSet<String>> getTags() {
 		return tags;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		Reader reader = new Reader("text");
+		Parser parser = new Parser();
+		HashMap<String,List<String>> fileMap = reader.getFileMap();
+		HashSet<String> dictionary= reader.getDictionary(); 
+		HashMap<String,HashSet<String>> tfIdf = parser.tfIdf(fileMap, dictionary);
+		System.out.println(tfIdf);
 	}
 
 	

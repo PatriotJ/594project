@@ -107,7 +107,7 @@ public class Reader {
 	 * 
 	 * @return dictionary
 	 */
-	public Set<String> getDictionary(){
+	public HashSet<String> getDictionary(){
 		return dictionary;
 	}
 	

@@ -55,7 +55,7 @@ public class Reader {
 			}
 			
 		}
-		System.out.println(stopwords);
+		//System.out.println(stopwords);
 		this.fileMap = read(path);
 		
 	}

@@ -121,17 +121,18 @@ public class Parser {
 			
 			for(Entry<String,Double> entry2:entry1.getValue().entrySet()) {
 				String word = entry2.getKey();
+				String lowerCaseWord = word.toLowerCase();
 				double a = entry2.getValue();
 				double c = idfMap.get(word);
 				if(a >= 0.9) {
-					HashSet<String> titles = tfIdfMap.getOrDefault(word, new HashSet<String>());
+					HashSet<String> titles = tfIdfMap.getOrDefault(lowerCaseWord, new HashSet<String>());
 					titles.add(title);
-					tfIdfMap.put(word, titles);
+					tfIdfMap.put(lowerCaseWord, titles);
 				}
 				else if(a >= 0.7 && c >= 0.4) {
-					HashSet<String> titles = tfIdfMap.getOrDefault(word, new HashSet<String>());
+					HashSet<String> titles = tfIdfMap.getOrDefault(lowerCaseWord, new HashSet<String>());
 					titles.add(title);
-					tfIdfMap.put(word, titles);
+					tfIdfMap.put(lowerCaseWord, titles);
 				}
 			}
 		}

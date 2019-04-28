@@ -3,4 +3,4 @@
 
 download all files then run StaticGUI.java
 
-you will regret to click the checkbox
+if you are confident with your apm, go click the checkbox

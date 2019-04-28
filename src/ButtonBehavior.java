@@ -13,19 +13,30 @@ public class ButtonBehavior {
 
 	private JList<String> result;
 	private DefaultListModel<String> l;
+	HashMap<String, Integer> tagFreq;
+	HashMap<String, Integer> fileFreq;
 	
-	public void behavior(JButton searchButton, JList<String> result, JTextField input, DefaultListModel<String> l, HashMap<String,HashSet<String>> map,JList<String> auto) {
+	public void behavior(JButton searchButton, JList<String> result, JTextField input, DefaultListModel<String> l, HashMap<String,HashSet<String>> map,JList<String> auto, HashMap<String, Integer> tagFreq, HashMap<String, Integer> fileFreq) {
 		this.result = result;
 		this.l = l;
+		this.tagFreq = tagFreq;
+		this.fileFreq = fileFreq;
+		//click search
 		searchButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				l.removeAllElements();
 				HashSet<String> set = map.get(input.getText());
 				if(set!=null) {
-					for(String name: set) {
-						name = name.replace("text/", "");
-						name = name.replaceAll(".txt", "");
-						l.addElement(name);
+					//tag frequency++
+					tagFreq.put(input.getText(), tagFreq.getOrDefault(input.getText(), 0)+1);
+					//sort files
+					String[] fileArray = set.toArray(new String[0]);
+					for(int j = 0; j < fileArray.length-1; j++) {
+						fileArray[j] = fileArray[j].replace("text/", "").replace(".txt", "");
+					}
+					customSort(fileArray);
+					for(int j = fileArray.length-1; j >= 0; j--) {
+						l.addElement(fileArray[j]);
 					}
 				}
 				else {
@@ -35,11 +46,15 @@ public class ButtonBehavior {
 				auto.setVisible(false);
 			}
 		});
+		//click filename
 		result.addMouseListener(new MouseListener() {
 			//open file in new window
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(result.getSelectedIndex()!=-1) {
+					//file frequency++
+					fileFreq.put(result.getSelectedValue(), fileFreq.getOrDefault(result.getSelectedValue(), 0)+1);
+					
 					JFrame newFrame = new JFrame(result.getSelectedValue());
 					newFrame.setSize(800, 800);
 					newFrame.setLayout(new CardLayout(30, 30));
@@ -60,6 +75,7 @@ public class ButtonBehavior {
 						area.append("\n");
 					}
 					sc.close();
+					area.setEditable(false);
 					newFrame.setVisible(true);
 				}
 			}
@@ -74,6 +90,17 @@ public class ButtonBehavior {
 			public void mouseExited(MouseEvent e) {}
 			
 		});
+	}
+	private void customSort(String[] array) {
+		for(int i = 1; i < array.length; i++) {
+			String key = array[i];
+			int j = i-1;
+			while(j>=0&&fileFreq.getOrDefault(array[j], 0) > fileFreq.getOrDefault(key, 0)) {
+				array[j+1] = array[j];
+				j--;
+			}
+			array[j+1] = key;
+		}
 	}
 	
 }

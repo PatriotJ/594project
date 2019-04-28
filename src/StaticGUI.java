@@ -29,8 +29,12 @@ public class StaticGUI implements GUI {
 	private Reader reader;
 	private Parser parseResult;
 	HashMap<String,HashSet<String>> tfIdf;
-
+	HashMap<String, Integer> tagFreq;
+	HashMap<String, Integer> fileFreq;
+	
 	public StaticGUI() throws Exception {
+		tagFreq = new HashMap<String, Integer>();
+		fileFreq = new HashMap<String, Integer>();
 		try {
 			reader = new Reader("text");
 		} catch (Exception e) {
@@ -106,9 +110,9 @@ public class StaticGUI implements GUI {
 	public void behavior() {
 
 		TypeBehavior type = new TypeBehavior();
-		type.behavior(input, autoComplete, l1, tree);
+		type.behavior(input, autoComplete, l1, tree, tagFreq);
 		ButtonBehavior button = new ButtonBehavior();
-		button.behavior(searchButton, resultList, input, l2, tfIdf, autoComplete);
+		button.behavior(searchButton, resultList, input, l2, tfIdf, autoComplete, tagFreq, fileFreq);
 		
 		bonus.addItemListener(new ItemListener() {
 			@Override

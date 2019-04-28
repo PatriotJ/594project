@@ -46,14 +46,16 @@ public class Reader {
 	public Reader(String path) throws Exception {
 		this.stopwords = new HashSet<String>();
 		this.dictionary = new HashSet<String>();
-		Scanner stop = new Scanner(STOP_WORD);
+		File file = new File(STOP_WORD);
+		Scanner stop = new Scanner(file);
 		while(stop.hasNextLine()) {
 			String s = stop.nextLine().trim();
 			if(!s.isEmpty()) {
-				stopwords.add(s);
+				this.stopwords.add(s);
 			}
 			
 		}
+		System.out.println(stopwords);
 		this.fileMap = read(path);
 		
 	}

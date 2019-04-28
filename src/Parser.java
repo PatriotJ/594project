@@ -148,7 +148,10 @@ public class Parser {
 		HashMap<String,List<String>> fileMap = reader.getFileMap();
 		HashSet<String> dictionary= reader.getDictionary(); 
 		HashMap<String,HashSet<String>> tfIdf = parser.tfIdf(fileMap, dictionary);
-		System.out.println(tfIdf);
+//		System.out.println(tfIdf);
+		for(Entry<String,HashSet<String>> entry:tfIdf.entrySet()) {
+			System.out.println(entry);
+		}
 	}
 
 	

@@ -34,7 +34,7 @@ public class Parser {
 	
 	
 	public Parser() {
-		
+		super();
 	}
 	/**
 	 * Construtor
@@ -152,6 +152,10 @@ public class Parser {
 //		System.out.println(tfIdf);
 		for(Entry<String,HashSet<String>> entry:tfIdf.entrySet()) {
 			System.out.println(entry);
+			for(String s:entry.getValue()) {
+				System.out.println(s);
+			}
+			
 		}
 	}
 

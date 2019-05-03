@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -17,7 +18,8 @@ public class Lemmatizer {
     public Lemmatizer() {
         // Create StanfordCoreNLP object properties, with POS tagging
         // (required for lemmatization), and lemmatization
-        
+        // To create this class, we refer some of the public code 
+    		// from stackOverFlow and github.
     	
     		Properties props;
         props = new Properties();
@@ -42,13 +44,13 @@ public class Lemmatizer {
     }
 
     /**
-     * Analysis the while String and convert it to lemmatize
+     * Analysis the text String and convert word inside it to base form
      * @param documentText
      * @return
      */
     public List<String> lemmatize(String documentText)
     {
-        List<String> lemmas = new LinkedList<String>();
+        List<String> lemmas = new ArrayList<String>();
         // Create an empty Annotation just with the given text
         Annotation document = new Annotation(documentText);
         // run all Annotators on this text

@@ -55,9 +55,8 @@ public class Reader {
 			}
 			
 		}
-		//System.out.println(stopwords);
 		this.fileMap = read(path);
-		
+		stop.close();
 	}
 	
 	/**
@@ -75,7 +74,6 @@ public class Reader {
 			List<String> wordList = readLine(fileList[i]);
 			map.put(filename, wordList);
 		}
-//		this.fileMap = map;
 		return map;
 	}
 	

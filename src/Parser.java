@@ -34,6 +34,7 @@ public class Parser {
 	
 	
 	public Parser() {
+		// a normal constructor super the Object Class
 		super();
 	}
 	/**
@@ -42,6 +43,7 @@ public class Parser {
 	 * @throws Exception
 	 */
 	public Parser(String path) throws Exception{
+		// the constructor used to read all files in a certain path
 		reader = new Reader(path);
 		HashMap<String,List<String>> files = reader.getFileMap();
 		this.dictionary = reader.getDictionary();
@@ -55,8 +57,9 @@ public class Parser {
 	 * @return
 	 */
 	public HashMap<String,HashMap<String,Double>> tf(HashMap<String,List<String>> filemap){
-		//TODO
-		HashMap<String,HashMap<String,Double>> tfMap = new HashMap();
+		//tf method
+		// calculate the term frequency in a list of file textor.
+		HashMap<String,HashMap<String,Double>> tfMap = new HashMap<String,HashMap<String,Double>>();
 		Set<Entry<String,List<String>>> fileSet = filemap.entrySet();
 		for(Entry<String,List<String>> entry:fileSet) {
 			String title = entry.getKey();
@@ -69,7 +72,7 @@ public class Parser {
 	}
 	
 	private HashMap<String,Double> tf(List<String> doc){
-		//
+		// return tf score for a single file
 		double maxFrequency = 0;
 		HashMap<String,Double> tfMap = new HashMap<String,Double>();
 		for(String word:doc) {
@@ -95,8 +98,7 @@ public class Parser {
 	 * @return
 	 */
 	public HashMap<String,Double> idf(HashMap<String,List<String>> filemap,Set<String> dictionary){
-		//TODO
-		HashMap<String,Double> idfMap = new HashMap();
+		HashMap<String,Double> idfMap = new HashMap<String,Double>();
 		int size = filemap.size();
 		for(String word:dictionary) {
 			int count = 0;
@@ -112,10 +114,9 @@ public class Parser {
 	}
 	
 	public HashMap<String,HashSet<String>> tfIdf(HashMap<String,List<String>> filemap,Set<String> dictionary){
-		// TODO
 		HashMap<String,HashMap<String,Double>> tfMap = tf(filemap);
 		HashMap<String,Double> idfMap = idf(filemap, dictionary);
-		HashMap<String,HashSet<String>> tfIdfMap = new HashMap();
+		HashMap<String,HashSet<String>> tfIdfMap = new HashMap<String,HashSet<String>>();
 		for(Entry<String,HashMap<String, Double>> entry1 : tfMap.entrySet()) {
 			String title = entry1.getKey();
 			

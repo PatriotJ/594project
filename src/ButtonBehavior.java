@@ -31,7 +31,7 @@ public class ButtonBehavior {
 					tagFreq.put(input.getText(), tagFreq.getOrDefault(input.getText(), 0)+1);
 					//sort files
 					String[] fileArray = set.toArray(new String[0]);
-					for(int j = 0; j < fileArray.length-1; j++) {
+					for(int j = 0; j < fileArray.length; j++) {
 						fileArray[j] = fileArray[j].replace("text/", "").replace(".txt", "");
 					}
 					customSort(fileArray);

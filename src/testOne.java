@@ -10,6 +10,11 @@ public class testOne {
 		int y = 10;
 		int z = (int) (w * Math.round(x)/y);
 //		Math.rou
+		String s = "sssss";
+		String[] ss = s.split(",");
+		for(int i = 0;i<ss.length;i++) {
+			System.out.println(ss[i]);
+		}
 	}
 
 }
